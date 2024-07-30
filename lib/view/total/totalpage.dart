@@ -35,7 +35,7 @@ class Totalpage extends StatelessWidget {
                   height: screenHeight * 0.65,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Color.fromARGB(167, 239, 237, 237),
+                    color: const Color.fromARGB(167, 239, 237, 237),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -55,18 +55,36 @@ class Totalpage extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.data?.totalRevenue == null) {
+                            return Text(
+                              '₹ 0.00',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.06,
+                              ),
+                            );
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (!snapshot.hasData) {
-                            return Text('No data available');
+                            return const Text('No data available');
                           } else {
-                            return Text(
-                              snapshot.data!.totalRevenue,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: screenWidth * 0.06,
-                              ),
+                            final revenue =
+                                snapshot.hasData && snapshot.data != null
+                                    ? double.parse(snapshot.data!.totalRevenue)
+                                    : 0.0;
+                            return TweenAnimationBuilder(
+                              tween: Tween<double>(begin: 0, end: revenue),
+                              duration: const Duration(seconds: 2),
+                              builder: (context, value, child) {
+                                return Text(
+                                  '₹ ${value.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: screenWidth * 0.06,
+                                  ),
+                                );
+                              },
                             );
                           }
                         },

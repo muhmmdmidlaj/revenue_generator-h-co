@@ -48,13 +48,15 @@ class Allpage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
+                        Center(
+                          child: Card(
                             child: Container(
                               height: screenHeight * 0.30,
                               width: screenWidth * 0.45,
-                              color: const Color.fromARGB(167, 239, 237, 237),
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(167, 239, 237, 237),
+                                  borderRadius: BorderRadius.circular(8)),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,6 +77,15 @@ class Allpage extends StatelessWidget {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             return const CircularProgressIndicator();
+                                          } else if (snapshot.data?.total ==
+                                              null) {
+                                            return Text(
+                                              '₹ 0.00',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: screenWidth * 0.036,
+                                              ),
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Text(
                                                 'Error: ${snapshot.error}');
@@ -82,12 +93,24 @@ class Allpage extends StatelessWidget {
                                             return const Text(
                                                 'No data available');
                                           } else {
-                                            return Text(
-                                              snapshot.data!.total,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize:
-                                                      screenWidth * 0.036),
+                                           
+                                            final revenue = double.parse(
+                                                snapshot.data!.total);
+                                            return TweenAnimationBuilder(
+                                              tween: Tween<double>(
+                                                  begin: 0, end: revenue),
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                              builder: (context, value, child) {
+                                                return Text(
+                                                  '₹ ${value.toStringAsFixed(2)}',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          screenWidth * 0.036),
+                                                );
+                                              },
                                             );
                                           }
                                         },
@@ -99,9 +122,8 @@ class Allpage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
+                        Center(
+                          child: Card(
                             child: Container(
                               height: screenHeight * 0.30,
                               width: screenWidth * 0.45,
@@ -129,19 +151,37 @@ class Allpage extends StatelessWidget {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             return const CircularProgressIndicator();
+                                          } else if (snapshot.data?.total ==
+                                              null) {
+                                            return Text(
+                                              '₹ 0.00',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: screenWidth * 0.036,
+                                              ),
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Text(
                                                 'Error: ${snapshot.error}');
-                                          } else if (!snapshot.hasData) {
-                                            return const Text(
-                                                'No data available');
                                           } else {
-                                            return Text(
-                                              snapshot.data!.total,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize:
-                                                      screenWidth * 0.036),
+                                          
+                                            final revenue = double.parse(
+                                                snapshot.data!.total);
+                                            return TweenAnimationBuilder(
+                                              tween: Tween<double>(
+                                                  begin: 0, end: revenue),
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                              builder: (context, value, child) {
+                                                return Text(
+                                                  '₹ ${value.toStringAsFixed(2)}',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          screenWidth * 0.036),
+                                                );
+                                              },
                                             );
                                           }
                                         },
@@ -166,7 +206,7 @@ class Allpage extends StatelessWidget {
                             width: screenWidth * 0.60,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Color.fromARGB(167, 239, 237, 237),
+                              color: const Color.fromARGB(167, 239, 237, 237),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -188,18 +228,37 @@ class Allpage extends StatelessWidget {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
                                           return const CircularProgressIndicator();
+                                        } else if (snapshot
+                                                .data?.totalRevenue ==
+                                            null) {
+                                          return Text(
+                                            '₹ 0.00',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: screenWidth * 0.036,
+                                            ),
+                                          );
                                         } else if (snapshot.hasError) {
                                           return Text(
                                               'Error: ${snapshot.error}');
-                                        } else if (!snapshot.hasData) {
-                                          return const Text(
-                                              'No data available');
                                         } else {
-                                          return Text(
-                                            snapshot.data!.totalRevenue,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: screenWidth * 0.036),
+                                          
+                                          final revenue = double.parse(
+                                              snapshot.data!.totalRevenue);
+                                          return TweenAnimationBuilder(
+                                            tween: Tween<double>(
+                                                begin: 0, end: revenue),
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            builder: (context, value, child) {
+                                              return Text(
+                                                '₹ ${value.toStringAsFixed(2)}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize:
+                                                        screenWidth * 0.036),
+                                              );
+                                            },
                                           );
                                         }
                                       },

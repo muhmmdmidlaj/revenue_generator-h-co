@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 Stream<TodayRevenueData> getTodayRevenueStream() async* {
   while (true) {
     final response = await http
-        .get(Uri.parse('http://192.168.193.164/webhooks/orders/today'));
+        .get(Uri.parse('http://192.168.1.64:3003/webhooks/orders/today'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       yield TodayRevenueData.fromJson(data);
@@ -14,6 +14,6 @@ Stream<TodayRevenueData> getTodayRevenueStream() async* {
       print('data fetching faild');
       throw Exception('Failed to load revenue');
     }
-    await Future.delayed(Duration(seconds: 1)); // Adjust the interval as needed
+    await Future.delayed(Duration(seconds: 3)); // Adjust the interval as needed
   }
 }

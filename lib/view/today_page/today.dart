@@ -56,18 +56,34 @@ class Todaypage extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.data?.total == null) {
+                              return Text(
+                                '₹ 0.00',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: screenWidth * 0.036,
+                                ),
+                              );
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else if (!snapshot.hasData) {
-                              return Text('No data available');
+                              return const Text('No data available');
                             } else {
-                              return Text(
-                                snapshot.data!.total,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: screenWidth * 0.06,
-                                ),
+                              final revenue =
+                                  double.parse(snapshot.data!.total);
+                              return TweenAnimationBuilder(
+                                tween: Tween<double>(begin: 0, end: revenue),
+                                duration: const Duration(seconds: 2),
+                                builder: (context, value, child) {
+                                  return Text(
+                                    '₹ ${value.toStringAsFixed(2)}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: screenWidth * 0.06,
+                                    ),
+                                  );
+                                },
                               );
                             }
                           },
